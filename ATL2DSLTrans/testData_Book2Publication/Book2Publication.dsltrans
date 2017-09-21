@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<dsltrans:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dsltrans="http://dsltrans/2.0">
+  <source xsi:type="dsltrans:FilePort" name="maininput" filePathURI="IN">
+    <metaModelId metaModelName="Book"/>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="Book2Publication_CreationRule" previousSource="//@source.0">
+    <metaModelId metaModelURI="Publication.ecore" metaModelName="Publication"/>
+    <hasRule description="Book2Publication">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="Book" packageName="Book">
+          <attribute attributeName="title"/>
+        </class>
+      </match>
+      <apply>
+        <class className="Publication" packageName="Publication">
+          <attribute attributeName="title">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="authors"/>
+          <attribute attributeName="nbPages"/>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+</dsltrans:TransformationModel>

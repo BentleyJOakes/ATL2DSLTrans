@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ruletypesmm:Trafo xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ruletypesmm="http://ruletypesmm/1.0" name="Book2Publication">
+  <rules name="Book2Publication">
+    <inTypes>src_Book</inTypes>
+    <outTypes>trg_Publication</outTypes>
+    <allNavigationPaths>src_Book</allNavigationPaths>
+    <allNavigationPaths>trg_Publication</allNavigationPaths>
+    <allNavigationPaths>src_Book.title</allNavigationPaths>
+    <allNavigationPaths>trg_Publication.title</allNavigationPaths>
+    <allNavigationPaths>trg_Publication.authors</allNavigationPaths>
+    <allNavigationPaths>trg_Publication.nbPages</allNavigationPaths>
+    <bindingFeatures>trg_Publication.title</bindingFeatures>
+    <bindingFeatures>trg_Publication.authors</bindingFeatures>
+    <bindingFeatures>trg_Publication.nbPages</bindingFeatures>
+    <allFootPrints>src_Book</allFootPrints>
+    <allFootPrints>trg_Publication</allFootPrints>
+    <allFootPrints>src_Book.title</allFootPrints>
+    <allFootPrints>trg_Publication.title</allFootPrints>
+    <allFootPrints>trg_Publication.authors</allFootPrints>
+    <allFootPrints>trg_Publication.nbPages</allFootPrints>
+    <outFeatures>src_Book.title</outFeatures>
+  </rules>
+  <mms inputMM="PrimitiveTypes"/>
+  <mms inputMM="Book"/>
+  <mms outputMM="Publication"/>
+  <mms outputMM="PrimitiveTypes"/>
+</ruletypesmm:Trafo>
