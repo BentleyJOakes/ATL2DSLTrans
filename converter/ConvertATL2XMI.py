@@ -49,9 +49,8 @@ class ConvertATL2XMI:
 
         #TODO: Add automation of this step
 
-        print("Please manually run the launch scripts in Eclipse.")
-        print("This script will loop until all transformations have been converted.")
 
+        first = True
         while True:
 
             files = [f.replace(".xmi", "") for f in os.listdir(self.dest_dir_examples) if f.endswith(".xmi")]
@@ -60,6 +59,12 @@ class ConvertATL2XMI:
             if len(missing) == 0:
                 break
             else:
+
+                if first:
+                    print("Please manually run the launch scripts in Eclipse.")
+                    print("This script will loop until all transformations have been converted.")
+                    first = False
+
                 print("Still missing: " + str(missing))
 
             sleep(5)

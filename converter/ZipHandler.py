@@ -80,14 +80,14 @@ class ZipHandler:
                         if not os.path.exists(atl_trans_dir):
                             os.mkdir(atl_trans_dir)
 
-                        self.extract_file(myzip, atl_trans_file, atl_trans_dir)
-                        self.extract_file(myzip, mms[in_mm], atl_trans_dir)
-                        self.extract_file(myzip, mms[out_mm], atl_trans_dir)
+                        self.extract_file("", myzip, atl_trans_file, atl_trans_dir)
+                        self.extract_file("source_", myzip, mms[in_mm], atl_trans_dir)
+                        self.extract_file("target_", myzip, mms[out_mm], atl_trans_dir)
 
-    def extract_file(self, zip_file, file_object, target_dir):
+    def extract_file(self, prefix, zip_file, file_object, target_dir):
         source = zip_file.open(file_object)
 
         target_filename = file_object.filename.split("/")[-1]
-        target = open(os.path.join(target_dir, target_filename), "wb")
+        target = open(os.path.join(target_dir, prefix + target_filename), "wb")
         with source, target:
             shutil.copyfileobj(source, target)

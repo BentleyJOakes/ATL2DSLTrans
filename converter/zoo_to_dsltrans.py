@@ -3,6 +3,8 @@
 from ZipDownloader import ZipDownloader
 from ZipHandler import ZipHandler
 from ConvertATL2XMI import ConvertATL2XMI
+from RTEHandler import RTEHandler
+
 
 class ZooConverter:
 
@@ -23,6 +25,10 @@ class ZooConverter:
         cax.convert()
         cax.tear_down()
 
+    def run_types_trans(self):
+        rte = RTEHandler(self.trans_dir)
+        rte.run()
+
 if __name__ == "__main__":
 
     zoo_site = "https://www.eclipse.org/atl/atlTransformations/"
@@ -35,3 +41,5 @@ if __name__ == "__main__":
     zc.separate_transformations()
 
     zc.run_atl_to_xmi()
+
+    zc.run_types_trans()
