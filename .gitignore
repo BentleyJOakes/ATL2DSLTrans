@@ -1,5 +1,8 @@
 **/bin
 converter/**/*.zip
+converter/example_dir/*
+
+output.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

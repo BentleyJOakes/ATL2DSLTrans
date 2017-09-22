@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atl="http://www.eclipse.org/gmt/2005/ATL" xmlns:ocl="http://www.eclipse.org/gmt/2005/OCL">
+  <atl:Module location="5:1-18:2" name="Composed2Simple">
+    <commentsBefore>-- @path Composed=/Test/transformations/Composed.ecore</commentsBefore>
+    <commentsBefore>-- @path Simple=/Test/transformations/Simple.ecore</commentsBefore>
+    <commentsBefore>-- @atlcompiler emftvm</commentsBefore>
+    <inModels location="6:26-6:39" name="IN" metamodel="/2"/>
+    <outModels location="6:8-6:20" name="OUT" metamodel="/1"/>
+    <elements xsi:type="atl:MatchedRule" location="8:1-18:2" name="Composed2Simple">
+      <outPattern location="11:2-17:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="12:3-17:4" varName="simple">
+          <type xsi:type="ocl:OclModelElement" location="12:12-12:32" name="StudentSimple" model="/1"/>
+          <bindings location="13:4-13:25" propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="13:12-13:25" name="name">
+              <source xsi:type="ocl:VariableExp" location="13:12-13:20" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="14:4-14:42" propertyName="supervisor">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="14:18-14:42" name="name">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="14:18-14:37" name="supervisor">
+                <source xsi:type="ocl:VariableExp" location="14:18-14:26" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="15:4-15:55" propertyName="affiliation">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="15:19-15:55" name="name">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="15:19-15:50" name="affiliation">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="15:19-15:38" name="supervisor">
+                  <source xsi:type="ocl:VariableExp" location="15:19-15:27" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+                </source>
+              </source>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="9:2-10:30">
+        <elements xsi:type="atl:SimpleInPatternElement" location="10:3-10:30" varName="composed" variableExp="/0/@elements.0/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.0/@outPattern/@elements.0/@bindings.1/@value/@source/@source /0/@elements.0/@outPattern/@elements.0/@bindings.2/@value/@source/@source/@source">
+          <type xsi:type="ocl:OclModelElement" location="10:14-10:30" name="Student" model="/2"/>
+        </elements>
+      </inPattern>
+    </elements>
+  </atl:Module>
+  <ocl:OclModel location="6:14-6:20" name="Simple" elements="/0/@elements.0/@outPattern/@elements.0/@type" model="/0/@outModels.0"/>
+  <ocl:OclModel location="6:31-6:39" name="Composed" elements="/0/@elements.0/@inPattern/@elements.0/@type" model="/0/@inModels.0"/>
+</xmi:XMI>

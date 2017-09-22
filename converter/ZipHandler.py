@@ -20,7 +20,7 @@ class ZipHandler:
             if "TT2BDD" not in zip_filename:
                continue
 
-            print(zip_filename)
+            #print(zip_filename)
 
             mms = defaultdict(list)
             trans = defaultdict(list)
@@ -37,9 +37,9 @@ class ZipHandler:
                     elif f.filename.endswith(".atl"):
                         trans[name] = f
 
-                print("MMS: ")
-                for k, v in mms.items():
-                    print(str(k) + " : " + str(v.filename))
+                #print("MMS: ")
+                #for k, v in mms.items():
+                #    print(str(k) + " : " + str(v.filename))
 
 
                 #find the needed metamodels in the transformation
@@ -62,8 +62,8 @@ class ZipHandler:
                             in_mm = spl[1].split(":")[1]
                             out_mm = spl[3].split(":")[1]
 
-                        print(in_mm)
-                        print(out_mm)
+                        #print(in_mm)
+                        #print(out_mm)
 
                         if in_mm is None or out_mm is None:
                             print("Error: Couldn't get metamodels from transformation: " + atl_trans_name)
@@ -74,8 +74,8 @@ class ZipHandler:
                             continue
 
                         atl_trans_dir = os.path.join(self.trans_dir, atl_trans_name)
-                        print(atl_trans_dir)
-                        print(atl_trans_file.filename)
+                        #print(atl_trans_dir)
+                        #print(atl_trans_file.filename)
 
                         if not os.path.exists(atl_trans_dir):
                             os.mkdir(atl_trans_dir)

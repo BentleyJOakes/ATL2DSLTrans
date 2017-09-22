@@ -2,6 +2,7 @@
 
 from ZipDownloader import ZipDownloader
 from ZipHandler import ZipHandler
+from ConvertATL2XMI import ConvertATL2XMI
 
 class ZooConverter:
 
@@ -16,6 +17,12 @@ class ZooConverter:
         zh = ZipHandler(self.zip_dir, self.trans_dir)
         zh.unzip()
 
+    def run_atl_to_xmi(self):
+        cax = ConvertATL2XMI(self.trans_dir)
+        cax.set_up()
+        cax.convert()
+        cax.tear_down()
+
 if __name__ == "__main__":
 
     zoo_site = "https://www.eclipse.org/atl/atlTransformations/"
@@ -27,4 +34,4 @@ if __name__ == "__main__":
 
     zc.separate_transformations()
 
-    zc.run_atl2model()
+    zc.run_atl_to_xmi()
