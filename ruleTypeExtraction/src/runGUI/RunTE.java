@@ -5,9 +5,8 @@ import java.io.IOException;
 import org.eclipse.emf.ecore.xmi.PackageNotFoundException;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 
-import gui.*;
-import exceptions.TransformationException;
-import exceptions.UseCommandException;
+import rteexceptions.*;
+import rtegui.*;
 
 public class RunTE {
 
