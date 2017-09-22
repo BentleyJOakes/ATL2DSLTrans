@@ -5,22 +5,26 @@ from ZipHandler import ZipHandler
 
 class ZooConverter:
 
-    def __init__(self, output_dir):
-        self.output_dir = output_dir
+    def __init__(self, zip_dir, trans_dir):
+        self.zip_dir = zip_dir
+        self.trans_dir = trans_dir
 
     def download_zips(self, zoo_site):
-        ZipDownloader(zoo_site, self.output_dir)
+        ZipDownloader(zoo_site, self.zip_dir)
 
     def separate_transformations(self):
-        zh = ZipHandler(self.output_dir)
+        zh = ZipHandler(self.zip_dir, self.trans_dir)
         zh.unzip()
 
 if __name__ == "__main__":
 
     zoo_site = "https://www.eclipse.org/atl/atlTransformations/"
-    output_dir = "./output"
-    zc = ZooConverter(output_dir)
+    zip_dir = "./zip_dir"
+    trans_dir = "./example_dir"
+    zc = ZooConverter(zip_dir, trans_dir)
 
     #zc.download_zips(zoo_site)
 
     zc.separate_transformations()
+
+    zc.run_atl2model()

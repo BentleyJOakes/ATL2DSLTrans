@@ -6,8 +6,9 @@ from collections import defaultdict
 
 class ZipHandler:
 
-    def __init__(self, zip_dir):
+    def __init__(self, zip_dir, trans_dir):
         self.zip_dir = zip_dir
+        self.trans_dir = trans_dir
 
     def unzip(self):
         files = os.listdir(self.zip_dir)
@@ -72,16 +73,16 @@ class ZipHandler:
                             print("Error: Metamodels not found: " + in_mm + " or " + out_mm)
                             continue
 
-                        trans_dir = os.path.join(self.zip_dir, atl_trans_name)
-                        print(trans_dir)
+                        atl_trans_dir = os.path.join(self.trans_dir, atl_trans_name)
+                        print(atl_trans_dir)
                         print(atl_trans_file.filename)
 
-                        if not os.path.exists(trans_dir):
-                            os.mkdir(trans_dir)
+                        if not os.path.exists(atl_trans_dir):
+                            os.mkdir(atl_trans_dir)
 
-                        self.extract_file(myzip, atl_trans_file, trans_dir)
-                        self.extract_file(myzip, mms[in_mm], trans_dir)
-                        self.extract_file(myzip, mms[out_mm], trans_dir)
+                        self.extract_file(myzip, atl_trans_file, atl_trans_dir)
+                        self.extract_file(myzip, mms[in_mm], atl_trans_dir)
+                        self.extract_file(myzip, mms[out_mm], atl_trans_dir)
 
     def extract_file(self, zip_file, file_object, target_dir):
         source = zip_file.open(file_object)

@@ -1,5 +1,5 @@
 **/bin
-converter/output/*.zip
+converter/**/*.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
