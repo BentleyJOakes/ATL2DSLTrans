@@ -17,10 +17,10 @@ class ZipHandler:
         files.sort()
         for i, zip_filename in enumerate(files):
 
-            if "TT2BDD" not in zip_filename:
-               continue
+            #if "TT2BDD" not in zip_filename:
+            #   continue
 
-            #print(zip_filename)
+            print("Opening up example: " + zip_filename)
 
             mms = defaultdict(list)
             trans = defaultdict(list)
@@ -28,6 +28,15 @@ class ZipHandler:
             with ZipFile(zip_filename) as myzip:
                 for f in myzip.infolist():
                     #print(f.filename)
+
+                    skip_words = ["output", "test"]
+                    skip = False
+                    for x in skip_words:
+                        if x in f.filename.lower():
+                            skip = True
+                            break
+                    if skip:
+                        continue
 
                     name = f.filename.split("/")[-1].split(".")[0]
 
@@ -46,32 +55,39 @@ class ZipHandler:
                 for atl_trans_name, atl_trans_file in trans.items():
                     with myzip.open(atl_trans_file) as myfile:
 
-                        #print(myfile.readlines())
+                        #print("File: " + atl_trans_file.filename)
 
-                        in_mm = None
-                        out_mm = None
+                        MMs = []
 
                         for line in myfile.readlines():
                             #print(line)
-                            if not b"create OUT" in line:
+                            if not b"create " in line:
                                 continue
 
-                            line = line.decode("UTF-8").replace(";", "").strip()
+                            line = line.decode("UTF-8").replace(";", "").replace(",","").strip()
 
+                            #print(line)
                             spl = line.split(" ")
-                            in_mm = spl[1].split(":")[1]
-                            out_mm = spl[3].split(":")[1]
+
+                            mm_indices = [i+1 for i, x in enumerate(line.split(" ")) if x == ":"]
+
+                            MMs = [spl[x] for x in mm_indices]
 
                         #print(in_mm)
                         #print(out_mm)
 
-                        if in_mm is None or out_mm is None:
-                            print("Error: Couldn't get metamodels from transformation: " + atl_trans_name)
-                            continue
+                        built_in_MMs = ['ATL', 'XML']
 
-                        if in_mm not in mms.keys() or out_mm not in mms.keys():
-                            print("Error: Metamodels not found: " + in_mm + " or " + out_mm)
-                            continue
+                        if not MMs:
+                            print("Error: Couldn't get metamodels from transformation: " + atl_trans_name)
+                            #raise Exception()
+                            break
+
+                        for mm in MMs:
+
+                            if mm not in built_in_MMs and mm not in mms.keys():
+                                print("Error: Metamodel not found: " + mm)
+                                #raise Exception()
 
                         atl_trans_dir = os.path.join(self.trans_dir, atl_trans_name)
                         #print(atl_trans_dir)
@@ -81,8 +97,15 @@ class ZipHandler:
                             os.mkdir(atl_trans_dir)
 
                         self.extract_file("", myzip, atl_trans_file, atl_trans_dir)
-                        self.extract_file("source_", myzip, mms[in_mm], atl_trans_dir)
-                        self.extract_file("target_", myzip, mms[out_mm], atl_trans_dir)
+
+                        for mm in MMs:
+                            if mm not in built_in_MMs:
+                                if mms[mm]:
+                                    self.extract_file("mm_", myzip, mms[mm], atl_trans_dir)
+                            else:
+                                source_file = os.path.join("metamodels", mm + ".ecore")
+                                target_file = os.path.join(atl_trans_dir, "mm_" + mm + ".ecore")
+                                shutil.copyfile(source_file, target_file)
 
     def extract_file(self, prefix, zip_file, file_object, target_dir):
         source = zip_file.open(file_object)
