@@ -1,18 +1,23 @@
 # ATL2DSLTrans
 
-Projects with implementation of part of the papers [1,2]. This is a prototype to transform the declarative part of ATL rules to DSLTrans
+Project to automate the conversion of the ATL Zoo from ATL to DSLTrans. Note that we convert the the declarative part of ATL rules to DSLTrans. For further information, see [1,2].
+
+ Note that not all examples may be successfully transformed at this time.
+
 
 Usage:
+In the convertor folder, 'python zoo_to_dsltrans.py'.
+This will download, extract, and attempt to automate the following steps.
 
 Step 1:
-Convert .atl files to .xmi by running ATL2Model
-Requires installation of EMFTVM
+Convert .atl files to .xmi by running the ATL2Model launch configurations
+Requires installation of EMFTVM in Eclipse
 
 Step 2:
 Run ruleTypeExtraction to obtain *Types.xmi file
 
 Step 3:
-Run ATL2DSLTrans with above files to obtain the .dsltrans file
+Run ATL2DSLTrans project with above files to obtain the .dsltrans file
 
 Step 4:
 Examine the produced .dsltrans file with the DSLTrans editor in Eclipse (https://github.com/githubbrunob/DSLTransGIT/raw/master/UpdateSiteDSLTrans/site.xml)
