@@ -31,7 +31,9 @@ class ZooConverter:
 
     def run_atl_to_dsltrans(self):
         catd = ConvertATL2DSLTrans(self.trans_dir)
-        catd.run()
+        catd.set_up()
+        catd.convert()
+        catd.tear_down()
 
 if __name__ == "__main__":
 
@@ -40,12 +42,12 @@ if __name__ == "__main__":
     trans_dir = "./example_dir"
     zc = ZooConverter(zip_dir, trans_dir)
 
-    zc.download_zips(zoo_site)
+    #zc.download_zips(zoo_site)
 
-    zc.separate_transformations()
+    #zc.separate_transformations()
 
-    zc.run_atl_to_xmi()
+    #zc.run_atl_to_xmi()
 
-    zc.run_types_trans()
+    #zc.run_types_trans()
 
     zc.run_atl_to_dsltrans()
