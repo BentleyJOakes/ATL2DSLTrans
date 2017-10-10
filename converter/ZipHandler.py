@@ -13,6 +13,13 @@ class ZipHandler:
     def unzip(self):
         files = os.listdir(self.zip_dir)
 
+        num_trans = 0
+        trans_extracted = 0
+        refining = 0
+        mm_not_detected = 0
+        mm_not_found = 0
+
+
         files = [os.path.join(self.zip_dir, f) for f in files if f.endswith(".zip")]
         files.sort()
         for i, zip_filename in enumerate(files):
@@ -50,6 +57,7 @@ class ZipHandler:
                 #for k, v in mms.items():
                 #    print(str(k) + " : " + str(v.filename))
 
+                num_trans += len(trans)
 
                 #find the needed metamodels in the transformation
                 for atl_trans_name, atl_trans_file in trans.items():
@@ -81,6 +89,7 @@ class ZipHandler:
 
                         if is_refining:
                             print("Transformation skipped... is refining...")
+                            refining += 1
                             break
 
                         #print(in_mm)
@@ -91,6 +100,7 @@ class ZipHandler:
                         if not MMs:
                             print("Error: Couldn't get metamodels from transformation: " + atl_trans_name)
                             #raise Exception()
+                            mm_not_detected += 1
                             break
 
                         no_mms = False
@@ -102,6 +112,7 @@ class ZipHandler:
                                 no_mms = True
 
                         if no_mms:
+                            mm_not_found += 1
                             break
 
                         atl_trans_dir = os.path.join(self.trans_dir, atl_trans_name)
@@ -112,6 +123,7 @@ class ZipHandler:
                             os.mkdir(atl_trans_dir)
 
                         self.extract_file("", myzip, atl_trans_file, atl_trans_dir)
+                        trans_extracted += 1
 
                         for mm in MMs:
                             if mm not in built_in_MMs:
@@ -121,6 +133,15 @@ class ZipHandler:
                                 source_file = os.path.join("metamodels", mm + ".ecore")
                                 target_file = os.path.join(atl_trans_dir, "mm_" + mm + ".ecore")
                                 shutil.copyfile(source_file, target_file)
+
+        print("Conversion Status:")
+        print("Total Num Transformations - " + str(num_trans))
+        print("Failed (refining) - " + str(refining))
+        print("Failed (metamodels not detected) - " + str(mm_not_detected))
+        print("Failed (metamodels not found) - " + str(mm_not_found))
+        print("Total succeeded - " + str(num_trans - (refining + mm_not_detected + mm_not_found)))
+
+        print("Total extracted - " + str(trans_extracted))
 
     def extract_file(self, prefix, zip_file, file_object, target_dir):
         source = zip_file.open(file_object)
