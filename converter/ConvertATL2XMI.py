@@ -18,8 +18,11 @@ class ConvertATL2XMI:
         self.trans_moved = []
         self.trans_moved_dirs = {}
 
+        self.launch_group_file = os.path.join(self.dest_dir, "ATL2XMI.launch")
+
     def set_up(self):
 
+        print("Setting up conversion from ATL to XMI")
         #move ATL files
         dirs = sorted([os.path.join(self.trans_dir, d) for d in os.listdir(self.trans_dir) if os.path.isdir(os.path.join(self.trans_dir, d))])
         for d in dirs:
@@ -45,6 +48,19 @@ class ConvertATL2XMI:
                             new_line = line.replace("Composed2Simple", trans_name)
                             new.write(new_line + "\n")
 
+        with open(self.launch_group_file, 'w') as lg:
+            lg.write('<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n')
+            lg.write('<launchConfiguration type="org.eclipse.debug.core.groups.GroupLaunchConfigurationType">\n')
+            for i, trans in enumerate(self.trans_moved):
+                lg.write('<stringAttribute key="org.eclipse.debug.core.launchGroup.{0}.action" value="WAIT_FOR_TERMINATION"/>\n'.format(i))
+                lg.write('<booleanAttribute key="org.eclipse.debug.core.launchGroup.{0}.adoptIfRunning" value="false"/>\n'.format(i))
+                lg.write('<booleanAttribute key="org.eclipse.debug.core.launchGroup.{0}.enabled" value="true"/>\n'.format(i))
+                lg.write('<stringAttribute key="org.eclipse.debug.core.launchGroup.{0}.mode" value="inherit"/>\n'.format(i))
+                lg.write('<stringAttribute key="org.eclipse.debug.core.launchGroup.{0}.name" value="convert_{1}"/>\n'.format(i, trans))
+            lg.write('</launchConfiguration>\n')
+
+        print("Moved " + str(len(self.trans_moved)) + " ATL files")
+
     def convert(self):
 
         #TODO: Add automation of this step
@@ -61,15 +77,18 @@ class ConvertATL2XMI:
             else:
 
                 if first:
-                    print("Please manually run the launch scripts in Eclipse.")
-                    print("This script will loop until all transformations have been converted.")
+                    print("Please manually run the ATL2XMI launch script in Eclipse.")
+                    print("This monitoring script will loop until all transformations have been converted.")
                     first = False
 
-                print("Still missing: " + str(missing))
+                print("Still missing: " + str(len(missing)))
+                print(" - ".join(missing))
 
             sleep(5)
 
     def tear_down(self):
+
+        num_files_moved_back = 0
 
         files = [f.replace(".xmi", "") for f in os.listdir(self.dest_dir_examples) if f.endswith(".xmi")]
 
@@ -85,3 +104,6 @@ class ConvertATL2XMI:
 
             #print(original_dir)
             shutil.copyfile(filename+".xmi", os.path.join(original_dir, f+".xmi"))
+            num_files_moved_back += 1
+
+        print("Moved " + str(num_files_moved_back) + " xmi files")
