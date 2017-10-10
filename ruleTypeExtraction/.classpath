@@ -2,6 +2,8 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="Properties"/>
+	<classpathentry kind="src" path="metamodels"/>
 	<classpathentry kind="lib" path="lib/antlr-3.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.core.contenttype_3.4.200.v20130326-1255.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.core.jobs_3.5.300.v20130429-1813.jar"/>
@@ -14,15 +16,17 @@
 	<classpathentry kind="lib" path="lib/org.eclipse.equinox.preferences_3.5.100.v20130422-1538.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.equinox.registry_3.5.301.v20130717-1549.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.adt.editor_3.4.0.v201305211502.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.common_3.4.0.v201305211502.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.core_3.3.1.v201209061455.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.core_3.4.0.v201305211502.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.core.emf_3.4.0.v201305211502.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.dsls_3.3.1.v201209061455.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.engine_3.4.0.v201305211502.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.engine.emfvm_3.4.0.v201305211502.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.engine.vm_3.4.0.v201305211502.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.osgi_3.9.1.v20130814-1242.jar"/>
 	<classpathentry kind="lib" path="lib/runtime_registry_compatibility.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.common_3.8.0.v201705182014.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.core_3.8.0.v201705182014.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.core.emf_3.8.0.v201705182014.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.dsls_3.8.0.v201705182014.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.emftvm_3.8.0.v201705182014.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.emftvm.compiler_3.8.0.v201705182014.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.emftvm.trace_3.8.0.v201705182014.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.m2m.atl.engine_3.8.0.v201705182014.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

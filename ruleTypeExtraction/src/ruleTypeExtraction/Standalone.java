@@ -21,6 +21,10 @@ public class Standalone {
 		String pathTrgEcoreMMFile = args[1];
 		String pathATLTransformation = args[2];
 		String pathOUTFile = args[3];
+		String pathOUTFileSuffix = "";
+		
+		if (args.length == 5)
+			pathOUTFileSuffix = args[4];
 		
 		String[] s = pathATLTransformation.split("/");
 		String ATLTransName = s[s.length-1];
@@ -36,11 +40,14 @@ public class Standalone {
 			System.out.println("FileNotFoundException: " + e.toString());
 			
 			e.printStackTrace();
+			return;
+			
 		} catch (ATLCoreException e){
 			
 			System.out.println("ATLCoreException: " + e.toString());
 			
 			e.printStackTrace();
+			return;
 		}
 		try {
 			ExtractRuleTypes runner = new ExtractRuleTypes();
@@ -61,7 +68,7 @@ public class Standalone {
 			
 			File f = new File("tempTypesExtracted.xmi"); // This file contains the model with the types extracted
 			File fl = new File (pathOUTFile + "/" +      // We want to copy the model before into this one
-					ATLTransName.substring(0, ATLTransName.lastIndexOf('.')) + "Types.xmi");
+					ATLTransName.substring(0, ATLTransName.lastIndexOf('.')) + "Types" + pathOUTFileSuffix + ".xmi");
 						
 			InputStream input = null;
 			OutputStream output = null;
@@ -98,16 +105,19 @@ public class Standalone {
 			System.out.println("ATLCoreException: " + e.toString());
 			
 			e.printStackTrace();
+			return;
 		} catch (IOException e) {
 			
 			System.out.println("IOException: " + e.toString());
 			
 			e.printStackTrace();
+			return;
 		} catch (ATLExecutionException e) {
 			
 			System.out.println("ATLExecutionException: " + e.toString());
 			
 			e.printStackTrace();
+			return;
 		}
 	}
 
