@@ -57,6 +57,8 @@ class ZipHandler:
 
                         #print("File: " + atl_trans_file.filename)
 
+                        is_refining = False
+
                         MMs = []
 
                         for line in myfile.readlines():
@@ -66,6 +68,10 @@ class ZipHandler:
 
                             line = line.decode("UTF-8").replace(";", "").replace(",","").strip()
 
+                            if "refining" in line:
+                                is_refining = True
+                                break
+
                             #print(line)
                             spl = line.split(" ")
 
@@ -73,21 +79,30 @@ class ZipHandler:
 
                             MMs = [spl[x] for x in mm_indices]
 
+                        if is_refining:
+                            print("Transformation skipped... is refining...")
+                            break
+
                         #print(in_mm)
                         #print(out_mm)
 
-                        built_in_MMs = ['ATL', 'XML']
+                        built_in_MMs = ['ATL', 'XML', 'KM3', 'Ecore', 'UML',"UML2"]
 
                         if not MMs:
                             print("Error: Couldn't get metamodels from transformation: " + atl_trans_name)
                             #raise Exception()
                             break
 
+                        no_mms = False
                         for mm in MMs:
 
                             if mm not in built_in_MMs and mm not in mms.keys():
                                 print("Error: Metamodel not found: " + mm)
                                 #raise Exception()
+                                no_mms = True
+
+                        if no_mms:
+                            break
 
                         atl_trans_dir = os.path.join(self.trans_dir, atl_trans_name)
                         #print(atl_trans_dir)
