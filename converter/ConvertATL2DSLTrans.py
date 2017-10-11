@@ -25,7 +25,7 @@ class ConvertATL2DSLTrans:
                 #print("Error: Transformation XMI not found in " + d)
                 continue
 
-            types_xmi = [f for f in os.listdir(d) if f.endswith(".xmi") and "Types" in f]
+            types_xmi = [f for f in os.listdir(d) if f.endswith("Types.xmi")]
 
 
             if not types_xmi:

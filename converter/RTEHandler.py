@@ -20,6 +20,7 @@ class RTEHandler:
 
             mms = [x for x in files if x.endswith(".ecore")]
             trans = [x for x in files if x.endswith(".atl")][0]
+            trans_name = trans.replace(".atl", "")
 
             trans_path = os.path.abspath(os.path.join(d, trans))
             path = os.path.abspath(d)
@@ -31,21 +32,54 @@ class RTEHandler:
             current_path = os.getcwd()
             os.chdir(self.jar_loc)
 
-            #try all combos of mms
-            for mm1 in mms:
-                mm1_name = mm1.replace("mm_", "").replace(".ecore", "")
-                mm1_path = os.path.abspath(os.path.join(path, mm1))
-                #print(mm1_path)
-                for mm2 in mms:
-                    mm2_name = mm2.replace("mm_", "").replace(".ecore", "")
-                    mm2_path = os.path.abspath(os.path.join(path, mm2))
+            source_mm = None
+            source_mm_name = None
 
-                    suffix = "-" + mm1_name + '-' + mm2_name
-                    command = "java -jar " + self.jar_name + " " + mm1_path  + " " + mm2_path  + " " + trans_path + " " + path + " " + suffix
-                    print("Running: " + command)
-                    out_filename = os.path.join(path, "out" + suffix + ".txt")
-                    with open(out_filename, 'w') as o:
-                        subprocess.run(command, shell=True, stderr = subprocess.STDOUT, stdout=o)
+            target_mm = None
+            target_mm_name = None
+
+            for mm in mms:
+                mm_name = mm.replace("mm_", "").replace(".ecore", "")
+
+                if trans_name.lower().startswith(mm_name.lower()):
+                    source_mm = mm
+                    source_mm_name = mm_name
+                elif trans_name.lower().endswith(mm_name.lower()):
+                    target_mm = mm
+
+            if len(mms) == 1:
+                source_mm = mms[0]
+                target_mm = mms[0]
+
+            #try to autodetect source and target mms
+            if source_mm and not target_mm:
+                if source_mm_name in mms[0]:
+                    target_mm = mms[1]
+                else:
+                    if source_mm_name in mms[1]:
+                        target_mm = mms[0]
+
+
+
+            if not (source_mm and target_mm):
+                s = "Error: Couldn't find source and target metamodels from transformation name!\n"
+                s += "Metamodels: " + str(mms) + "\n"
+                s+= str(source_mm)
+                s += str(target_mm)
+                s += "Transformation name: " + trans
+                raise Exception(s)
+
+
+
+            source_mm_path = os.path.abspath(os.path.join(path, source_mm))
+            target_mm_path = os.path.abspath(os.path.join(path, target_mm))
+
+            suffix = ""#""-" + mm1_name + '-' + mm2_name
+            command = "java -jar " + self.jar_name + " " + source_mm_path  + " " + target_mm_path  + " " + trans_path + " " + path + " " + suffix
+            print("Running: " + command)
+            out_filename = os.path.join(path, "out" + suffix + ".txt")
+            with open(out_filename, 'w') as o:
+                subprocess.run(command, shell=True, stderr = subprocess.STDOUT, stdout=o)
 
             os.chdir(current_path)
 
