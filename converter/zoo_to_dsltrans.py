@@ -42,12 +42,12 @@ if __name__ == "__main__":
     trans_dir = "./example_dir"
     zc = ZooConverter(zip_dir, trans_dir)
 
-    #zc.download_zips(zoo_site)
+    zc.download_zips(zoo_site)
 
-    #zc.separate_transformations()
+    zc.separate_transformations()
 
-    #zc.run_atl_to_xmi()
+    zc.run_atl_to_xmi()
 
-    #zc.run_types_trans()
+    zc.run_types_trans()
 
     zc.run_atl_to_dsltrans()
