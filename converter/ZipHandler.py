@@ -47,7 +47,7 @@ class ZipHandler:
 
                     name = f.filename.split("/")[-1].split(".")[0]
 
-                    if f.filename.endswith(".ecore") or f.filename.endswith(".xmi"):
+                    if f.filename.endswith(".ecore"):# or f.filename.endswith(".xmi"):
                         mms[name]= f
 
                     elif f.filename.endswith(".atl"):
